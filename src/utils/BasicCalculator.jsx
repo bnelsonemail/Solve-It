@@ -19,7 +19,7 @@ export default function useBasicCalculator() {
 
     // Handle operator input
     const handleOperatorClick = (op) => {
-        if (operator) basicCalculation(); // Perform pending operation
+        if (operator) performCalculation(); // Perform pending operation
         setOperator(op);
         setPreviousValue(currentValue);
         setCurrentValue('0');
@@ -49,20 +49,33 @@ export default function useBasicCalculator() {
                 result = prev / current;
                 break;
             default:
-                return;
+                return undefined;
         };
-        setCurrentValue(result.toString());
-        setPreviousValue(null);
-        setOperator(null);
+
+        // Limit result to 15 significant digits
+        if (result !== Infinity) {
+            result = parseFloat(result.toPrecision(15));
+        }
+
+        return result;
     };
 
     // Handle equals click
     const handleEqualsClick = () => {
         if (previousValue && operator) {
-          const result = performCalculation(previousValue, currentValue, operator);
-          setCurrentValue(result.toString());
-          setPreviousValue(null);
-          setOperator(null);
+            console.log("Inputs:", { previousValue, currentValue, operator }); // Debug inputs
+            const result = performCalculation(previousValue, currentValue, operator);
+            console.log(result); // Log the value to check if it's undefined
+            if (result === undefined || result === null) {
+            console.error("Result is invalid");
+            setCurrentValue("0"); // Provide a default value
+        } else {
+            setCurrentValue(result.toString());  // Update state with valid result
+        }
+        
+        // Reset for next calculation
+        setPreviousValue(null);
+        setOperator(null);
         }
     };
 
