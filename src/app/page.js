@@ -3,6 +3,7 @@
 import Display from "@/components/Display";
 import NumberButton from "@/components/NumberButton";
 import OperationButton from "@/components/OperationButton";
+import ScientificButton from "@/components/ScientificButton";
 
 
 export default function Home() {
@@ -23,6 +24,17 @@ export default function Home() {
 
   const operationButtons = ["+", "-", "*", "/"];
 
+const scientificButtons = [
+  "sin",
+  "ln",
+  "cos",
+  "log",
+  "tan",
+  "sqrt",
+  "EXP",
+  "x^2",
+]
+
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-white">
       <div className="flex flex-col bg-gradient-to-bl from-black via-gray-800 to-black w-[400px] h-fit rounded-xl p-6 gap-6 shadow-lg shadow-black/50">
@@ -38,6 +50,11 @@ export default function Home() {
               <OperationButton key={button} button={button}/>
             ))}
           </div>
+          <div className="w-2/3 grid grid-cols-2 gap-2">
+            {scientificButtons.map((button) => (
+              <ScientificButton key={button} button={button}/>
+            ))}
+          </div>
         </div>
         <div className="flex flex-row gap-4">
           <button className="w-1/2 hover:scale-105 active:scale-100 hover:bg-gradient-to-br bg-gradient-to-b from-blue-600 rounded-lg h-12 text-white">
@@ -46,6 +63,7 @@ export default function Home() {
           <button className="w-1/2 hover:scale-105 active:scale-100 hover:bg-gradient-to-br bg-gradient-to-b from-gray-600 rounded-lg h-12 text-white">
             =
           </button>
+
         </div>
       </div>
     </div>
